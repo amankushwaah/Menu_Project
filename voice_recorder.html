@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microphone Input Demo</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a2e40, #2a3c54);
+            color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background-size: 200% 200%;
+            animation: backgroundShift 10s infinite alternate;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .home-button {
+            background-color: #9ebae0;
+            color: #1a2e40;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 25px;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+        }
+
+        .home-button:hover {
+            background-color: #4a6fa5;
+            transform: scale(1.05);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            margin-top: 80px;
+            width: 100%;
+            max-width: 600px;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #d3e0ff;
+            text-shadow: 0 0 10px #d3e0ff;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        button {
+            margin: 10px;
+            padding: 12px 24px;
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.2em;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        #status {
+            margin-bottom: 20px;
+            color: #d3e0ff;
+            font-size: 1.2em;
+        }
+
+        audio {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #d3e0ff;
+            border-radius: 5px;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="home-button" onclick="window.location.href='index.html'">Home</button>
+    </header>
+    <div class="container">
+        <h1>Voice Recorder</h1>
+        <button id="start">Start Recording</button>
+        <button id="stop">Stop Recording</button>
+        <p id="status">Status: Idle</p>
+        <audio id="audio" controls></audio>
+    </div>
+
+    <script>
+        document.getElementById('start').onclick = async function() {
+            const status = document.getElementById('status');
+            const audioElement = document.getElementById('audio');
+            status.textContent = 'Status: Recording...';
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                status.textContent = 'Status: getUserMedia not supported in this browser.';
+                return;
+            }
+
+            const constraints = { audio: true };
+            let mediaRecorder;
+            let audioChunks = [];
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = function(event) {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = function() {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    audioElement.src = audioUrl;
+                    status.textContent = 'Status: Recording stopped.';
+                };
+
+                mediaRecorder.start();
+            } catch (err) {
+                status.textContent = `Status: Error - ${err.message}`;
+            }
+
+            document.getElementById('stop').onclick = function() {
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                }
+            };
+        };
+    </script>
+</body>
+</html>

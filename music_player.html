@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Music Player</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a2e40, #2a3c54);
+            color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background-size: 200% 200%;
+            animation: backgroundShift 10s infinite alternate;
+        }
+
+        h1 {
+            color: #d3e0ff;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: center;
+            background: linear-gradient(135deg, #4a6fa5, #9ebae0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 800px;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .player input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #708ca8;
+            border-radius: 10px;
+            background-color: #2a3c54;
+            color: #f2f2f2;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .controls button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #4a6fa5, #9ebae0);
+            color: #1a2e40;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .controls button:hover {
+            transform: scale(1.1);
+            background-color: #4a6fa5;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #555;
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress {
+            height: 10px;
+            background-color: #4a6fa5;
+            width: 0;
+            transition: width 0.2s ease;
+        }
+
+        .playlist-section {
+            margin-top: 30px;
+        }
+
+        .playlist-section input[type="text"] {
+            padding: 12px;
+            width: calc(100% - 160px);
+            font-size: 1em;
+            border: 2px solid #708ca8;
+            border-radius: 10px;
+            background-color: #2a3c54;
+            color: #f2f2f2;
+            margin-right: 15px;
+        }
+
+        .playlist-section button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #ff6f00, #ffca28);
+            color: #1a2e40;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .playlist-section button:hover {
+            transform: scale(1.1);
+            background-color: #ff6f00;
+        }
+
+        #homeButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 24px;
+            background-color: #9ebae0;
+            color: #1a2e40;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        #homeButton:hover {
+            background-color: #4a6fa5;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes backgroundShift {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" id="homeButton">Home</a>
+    <h1>Gradient Music Player</h1>
+    <div class="container">
+        <div class="player">
+            <input type="file" id="file-input" accept="audio/*" multiple />
+            <div class="controls">
+                <button id="play">Play</button>
+                <button id="rewind">Rewind</button>
+                <button id="shuffle">Shuffle</button>
+            </div>
+            <div class="progress-container">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+        <div class="playlist-section">
+            <input type="text" id="playlist-name" placeholder="New playlist name" />
+            <button id="create-playlist">Create</button>
+        </div>
+    </div>
+</body>
+
+</html>

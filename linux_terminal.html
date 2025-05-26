@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Terminal</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #2c3e50, #1b2c44); /* Cosmic gradient */
+            font-family: 'Courier New', Courier, monospace;
+            color: #f2f2f2;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            animation: backgroundShift 10s infinite alternate; /* Background animation */
+        }
+
+        .terminal {
+            width: 90%;
+            max-width: 850px;
+            background: rgba(60, 70, 80, 0.9); /* Semi-transparent cosmic slate */
+            border-radius: 15px;
+            box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+            padding: 30px;
+            overflow: hidden;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .terminal input {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            background-color: transparent;
+            border-bottom: 2px solid #96c5fc;
+            font-size: 1.1em;
+            color: #f2f2f2;
+            outline: none;
+            transition: border-bottom 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .terminal input:focus {
+            border-bottom: 2px solid #96c5fc;
+            box-shadow: 0 0 10px #96c5fc;
+        }
+
+        #output {
+            max-height: 250px;
+            padding: 10px;
+            margin-bottom: 20px;
+            overflow-y: auto;
+            background-color: #2c3b49;
+            border-radius: 10px;
+            border: 1px solid #334756;
+            color: #f2f2f2;
+            transition: all 0.3s ease;
+        }
+
+        .prompt {
+            color: #96c5fc; /* Soft gradient for prompt */
+            font-weight: bold;
+        }
+
+        .home-btn {
+            background-color: #e0e4e9;
+            color: #334756;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 1.1em;
+            border-radius: 8px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .home-btn:hover {
+            background-color: #3a506b;
+            transform: translateY(-5px);
+        }
+
+        /* Typing effect */
+        .typing {
+            display: inline-block;
+            border-right: 2px solid #96c5fc;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 1.5s steps(40, end), blink 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: #96c5fc; }
+        }
+
+        /* Scrollbar customization */
+        #output::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #output::-webkit-scrollbar-thumb {
+            background: #96c5fc;
+            border-radius: 5px;
+        }
+
+        #output::-webkit-scrollbar-track {
+            background: #2c3b49;
+        }
+
+        /* Smooth fade-in effect for commands */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Background animation */
+        @keyframes backgroundShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Form and container fade-in */
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <button class="home-btn" onclick="window.location.href='index.html'">Home</button>
+    <div class="terminal">
+        <div id="output"></div>
+        <input type="text" id="input" placeholder="Enter command..." autofocus autocomplete="off" onkeydown="handleInput(event)">
+    </div>
+
+    <script>
+        function handleInput(event) {
+            if (event.key === 'Enter') {
+                const input = document.getElementById('input');
+                const command = input.value.trim();
+                input.value = '';  // Clear input
+
+                if (!command) return;
+
+                const output = document.getElementById('output');
+                const newLine = document.createElement('div');
+                newLine.classList.add('fade-in');
+                newLine.innerHTML = `<span class="prompt">$</span> <span class="command typing">${command}</span>`;
+                output.appendChild(newLine);
+
+                // Fake response for demo purposes
+                setTimeout(() => {
+                    const responseLine = document.createElement('div');
+                    responseLine.classList.add('fade-in');
+                    responseLine.innerHTML = `<span>${fakeResponse(command)}</span>`;
+                    output.appendChild(responseLine);
+                    output.scrollTop = output.scrollHeight;  // Auto scroll to bottom
+                }, 500);
+            }
+        }
+
+        function fakeResponse(command) {
+            switch (command.toLowerCase()) {
+                case 'help':
+                    return "Available commands: help, exit, clear, version";
+                case 'version':
+                    return "Cosmic Terminal v2.0.0";
+                case 'clear':
+                    document.getElementById('output').innerHTML = '';
+                    return "";
+                case 'exit':
+                    window.close();
+                    return "Exiting...";
+                default:
+                    return `Command not found: ${command}`;
+            }
+        }
+    </script>
+</body>
+</html>

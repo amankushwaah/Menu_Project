@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Bulk Email</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a2e40, #2a3c54);
+            color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background-size: 200% 200%;
+            animation: backgroundShift 10s infinite alternate;
+        }
+
+        h1 {
+            color: #d3e0ff;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: center;
+            background: linear-gradient(135deg, #4a6fa5, #9ebae0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 600px;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1.2em;
+            color: #d3e0ff;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #708ca8;
+            border-radius: 10px;
+            font-size: 1em;
+            background-color: #2a3c54;
+            color: #f2f2f2;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        textarea {
+            height: 180px;
+            resize: none;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: #9ebae0;
+            outline: none;
+            box-shadow: 0 0 10px #9ebae0;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            gap: 10px;
+        }
+
+        #homeButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 24px;
+            background-color: #9ebae0;
+            color: #1a2e40;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        #homeButton:hover {
+            background-color: #4a6fa5;
+            transform: scale(1.05);
+        }
+
+        input[type="submit"] {
+            padding: 12px 20px;
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .button-container {
+                flex-direction: column;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" id="homeButton">Home</a>
+    <h1>Send Bulk Email</h1>
+    <div class="container">
+        <form action="/cgi-bin/send_bulk_email.py" method="post">
+            <div class="form-group">
+                <label for="subject">Subject of Email:</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+
+            <div class="form-group">
+                <label for="body">Body of Email:</label>
+                <textarea id="body" name="body" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="recipients">To:</label>
+                <input type="text" id="recipients" name="recipients" required>
+            </div>
+
+            <div class="button-container">
+                <input type="submit" value="Send Emails">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

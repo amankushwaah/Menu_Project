@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>IAM User Management</title>
+
+    <style>
+        /* Cosmic-inspired theme */
+        body {
+            background: linear-gradient(135deg, #2a3c54, #4a6fa5); /* Space blue gradient */
+            color: #d3e0ff; /* Gray-washed white text */
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 2.2em;
+            color: #d3e0ff; /* Light heading color */
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #1c2833; /* Dark space background */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Deep shadow */
+            text-align: center;
+            max-width: 550px;
+            width: 100%;
+            animation: fadeInUp 1.5s ease; /* Smooth entrance animation */
+        }
+
+        .form-control, .form-select {
+            background-color: #25354d; /* Darker background for inputs */
+            color: #d3e0ff; /* Light text */
+            border: 2px solid #9ebae0; /* Soft blue border */
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 6px 12px rgba(158, 186, 224, 0.3); /* Light shadow */
+            margin-bottom: 1.2rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #4a6fa5; /* Blue border on focus */
+            box-shadow: 0 0 10px rgba(74, 111, 165, 0.7);
+        }
+
+        .btn-secondary {
+            background-color: #9ebae0; /* Light blue button background */
+            color: #1a2e40; /* Dark contrast text */
+            border: none;
+            padding: 0.85rem 1.8rem;
+            border-radius: 50px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Deep shadow */
+            margin-top: 1.5rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d3e0ff; /* Light background on hover */
+            color: #1a2e40; /* Dark text */
+            transform: scale(1.05); /* Slight enlarge effect */
+        }
+
+        /* Updated Home Button */
+        .btn-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #9ebae0; /* Light blue background */
+            color: #1a2e40; /* Dark text */
+            border: none;
+            padding: 0.85rem 1.8rem;
+            border-radius: 50px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Deep shadow */
+        }
+
+        .btn-home:hover {
+            background-color: #d3e0ff; /* Lighter background on hover */
+            color: #1a2e40; /* Dark text */
+            transform: scale(1.05); /* Slight enlarge effect */
+        }
+
+        #content {
+            background-color: #1c2833;
+            color: #d3e0ff;
+            border: 2px solid #9ebae0; /* Light blue border */
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 6px 12px rgba(158, 186, 224, 0.3); /* Light shadow */
+            margin-top: 1.5rem;
+            animation: fadeInUp 1.5s ease; /* Content fade-in animation */
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Home button in the top-left corner -->
+    <button onclick="window.location.href='index.html'" class="btn btn-home">Home</button>
+
+    <div class="container">
+        <h2>Create and Delete IAM User</h2>
+        <input class="form-control form-control-lg" id="name" type="text" placeholder="Enter your name" name="name" aria-label=".form-control-lg example">
+        <select class="form-select form-select-lg" id="action" name="action" aria-label=".form-select-lg example">
+            <option value="create">Create User</option>
+            <option value="delete">Delete User</option>
+        </select>
+        <button onclick="manage_iam()" class="btn btn-secondary">Submit</button>
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function manage_iam() {
+            let name = document.getElementById('name').value;
+            let action = document.getElementById('action').value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://3.108.133.100/cgi-bin/AWSfiles/create_iam.py');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(`name=${name}&action=${action}`);
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    document.getElementById("content").innerHTML = this.responseText;
+                } else {
+                    document.getElementById("content").innerHTML = "Some error occurred";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

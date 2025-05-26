@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live HTML Interpreter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General body styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a2e40, #2a3c54);
+            color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-size: 200% 200%;
+            animation: backgroundShift 10s infinite alternate;
+        }
+
+        /* Header styles */
+        .header {
+            background: linear-gradient(135deg, #57c1eb, #4a6fa5);
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px #57c1eb, 0 0 15px #4a6fa5;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* Home button */
+        .home-btn {
+            background-color: #4a6fa5;
+            color: #ffffff;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 16px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            box-shadow: 0 0 8px #4a6fa5;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .home-btn:hover {
+            background-color: #57c1eb;
+            color: #000000;
+            transform: scale(1.05);
+        }
+
+        /* Main container styling */
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            width: 600px;
+            height: 600px;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 80px;
+        }
+
+        /* Editor and Output styles */
+        .editor, .output {
+            width: 48%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #57c1eb;
+            border-radius: 12px;
+            background-color: #2a3c54;
+            color: #f2f2f2;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px #57c1eb;
+            animation: neonGlow 2s infinite alternate;
+        }
+
+        /* Fixed title style */
+        .title {
+            background: #1a2e40;
+            color: #57c1eb;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 2px solid #57c1eb;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        /* Scrollable content area */
+        .content {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+            font-size: 16px;
+            line-height: 1.6;
+            white-space: pre;
+        }
+
+        /* Neon glow animation */
+        @keyframes neonGlow {
+            0% {
+                box-shadow: 0 0 10px #57c1eb, 0 0 20px #57c1eb;
+            }
+            100% {
+                box-shadow: 0 0 15px #4a6fa5, 0 0 25px #4a6fa5;
+            }
+        }
+
+        /* Background animation */
+        @keyframes backgroundShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Live HTML Interpreter</h1>
+        <button class="home-btn" onclick="goToHome()">Home</button>
+    </div>
+
+    <!-- Editor and Output Container -->
+    <div class="container">
+        <div class="editor">
+            <div class="title">HTML Code Editor</div>
+            <div class="content" contenteditable="true" id="htmlInput">
+                <!-- Initial HTML content -->
+            </div>
+        </div>
+        <div class="output">
+            <div class="title">Output Preview</div>
+            <div class="content" id="htmlOutput"></div>
+        </div>
+    </div>
+
+    <script>
+        // Live HTML Interpreter functionality
+        function updateOutput() {
+            var htmlInput = document.getElementById('htmlInput').innerText;
+            var htmlOutput = document.getElementById('htmlOutput');
+            htmlOutput.innerHTML = htmlInput;
+        }
+
+        // Update output when input changes
+        document.getElementById('htmlInput').addEventListener('input', updateOutput);
+
+        // Go to Home page function
+        function goToHome() {
+            window.location.href = "index.html"; // Replace with your actual homepage link
+        }
+    </script>
+</body>
+</html>

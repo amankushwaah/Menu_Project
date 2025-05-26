@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMAN KUSHWAHA </title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f4f4f9, #e0e0e0);
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #106EBE;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #f4f4f9;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #0FFCBE;
+        }
+
+        nav ul li a.active {
+            border-bottom: 2px solid #0FFCBE;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 50px;
+            background: linear-gradient(135deg, #106EBE, #0FFCBE);
+            color: white;
+            border-radius: 10px;
+            margin: 30px;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            color: #f4f4f9;
+            margin-bottom: 20px;
+            animation: slideIn 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            animation: slideIn 1.2s ease;
+        }
+
+        .hero .btn {
+            background-color: #0FFCBE;
+            color: #212121;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero .btn:hover {
+            background-color: #f4f4f9;
+            color: #212121;
+            transform: scale(1.1);
+        }
+
+        /* About Section */
+        .about {
+            padding: 60px 50px;
+            background-color: #f4f4f9;
+            text-align: center;
+            border-radius: 10px;
+            margin: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease;
+        }
+
+        .about h2 {
+            font-size: 2.2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #555;
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 60px 50px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 30px;
+        }
+
+        .skills h2 {
+            font-size: 2.2em;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .skills-list {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .skill-item {
+            background-color: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 150px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease;
+        }
+
+        .skill-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .skill-item i {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #0FFCBE;
+        }
+
+        /* Tasks Section */
+        .task-menu {
+            padding: 60px 50px;
+            background-color: #f4f4f9;
+            border-radius: 10px;
+            margin: 30px;
+            animation: fadeIn 1s ease;
+        }
+
+        .task-menu h2 {
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .task-card {
+            background-color: #106EBE;
+            color: rgb(8, 0, 0);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            height: 100%;
+        }
+
+        .task-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-outline-light {
+            border: 2px solid #1076eb;
+            color: #0000008a;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: block;
+            width: 100%;
+            text-align: center; 
+        }
+
+        .btn-outline-light:hover {
+            background-color: #34fff5;
+            color: #212121;
+        }
+
+
+        
+        /* Footer */
+        footer {
+            background-color: #106EBE;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #0FFCBE;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .skills-list {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .task-menu .row {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* New Styles for Bootstrap Grid */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: -15px;
+        }
+
+        .col-lg-4, .col-md-6 {
+            padding: 15px;
+            flex: 0 0 auto;
+            max-width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .col-md-6 {
+                max-width: 50%;
+            }
+
+            .col-lg-4 {
+                max-width: 33.33%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div><strong>AMAN KUSHWAHA</strong></div>
+        <ul>
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#tasks">Tasks</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Hi, I'm AMAN KUSHWAHA</h1>
+            <p>A Data Science Enthusiast | I build innovative solutions through data-driven insights</p>
+            <a href="https://www.linkedin.com/in/aman-kushwaha-4a3690237" class="btn" target="_blank">LinkedIn Profile</a>
+        </div>
+        <img src="images/Aman.jpg" height="250" width="250" alt="Aman Kushwaha">
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2>About Me</h2>
+        <p>I'm a passionate data science enthusiast dedicated to harnessing the power of data to drive innovation. With a strong foundation in statistical analysis, machine learning, and data visualization, I strive to create meaningful insights that can transform decision-making processes.</p>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <h2>My Skills</h2>
+        <div class="skills-list">
+            <div class="skill-item">
+                <i class="fas fa-code"></i>
+                <h4>Python</h4>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-database"></i>
+                <h4>SQL</h4>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-chart-line"></i>
+                <h4>Machine Learning</h4>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-chart-bar"></i>
+                <h4>Data Visualization</h4>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-brain"></i>
+                <h4>Deep Learning</h4>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-cogs"></i>
+                <h4>Statistical Analysis</h4>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-tools"></i>
+                <h4>Data Wrangling</h4>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-clipboard"></i>
+                <h4>Project Management</h4>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-users"></i>
+                <h4>Collaboration</h4>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-lightbulb"></i>
+                <h4>Problem Solving</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tasks Section -->
+    <section id ="tasks" class="task-menu">
+    <div class="container">
+        <h2>MyTasks</h2>
+        <div class="row g-4">
+            <!-- Task 1: Send SMS -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Send SMS</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='send_sms.html'">
+                            <i class="fas fa-sms"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Task 2: Live HTML Interpreter -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Live HTML Interpreter</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='html_live_interpreter.html'">
+                            <i class="fas fa-code"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Task 3: Bulk E-mail -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Bulk E-mail</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='bulk_mail.html'">
+                            <i class="fas fa-envelope"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Task 4: Speech to Text -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Speech to Text</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='speech_to_text.html'">
+                            <i class="fas fa-microphone-alt"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Task 5: Linux Terminal -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Linux Terminal</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='linux_terminal.html'">
+                            <i class="fas fa-terminal"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 6: Camera Live -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Camera Live</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='cam_live.html'">
+                            <i class="fas fa-video"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Task 7: Capture Image -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Capture Image</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='capture_image.html'">
+                            <i class="fas fa-camera"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 8: Geolocation -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Geolocation</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='geolocation.html'">
+                            <i class="fas fa-map-marker-alt"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 9: Search Top 5 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Search Top 5</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='google_search.html'">
+                            <i class="fas fa-search"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 10: Gnome -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Gnome</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='gnome.html'">
+                            <i class="fas fa-desktop"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 11: Drag and Drop -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Drag and Drop</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='draganddrop.html'">
+                            <i class="fas fa-hand-rock"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 12: AI Bot -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Chatbot</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='Chatbot.html'">
+                            <i class="fas fa-robot"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 13: My Docker -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">My Docker</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='my_docker.html'">
+                            <i class="fas fa-server"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 14: My Camera -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Music Player</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='music_player.html'">
+                            <i class="fas fa-camera-retro"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 15: Send Whatsapp -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Send Whatsapp</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='whatsapp.html'">
+                            <i class="fas fa-whatsapp"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 16: Voice Recorder -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Voice Recorder</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='voice_recorder.html'">
+                            <i class="fas fa-voicemail"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 17: Text to Speech -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Text to Speech</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='text_to_speech.html'">
+                            <i class="fas fa-microphone"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 18: Social Media -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Social Media</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='social_media.html'">
+                            <i class="fas fa-share-alt"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 19: Launch EC2 Instance -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Launch EC2 Instance</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='ec2_instances.html'">
+                            <i class="fas fa-cloud"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 20: Create IAM User -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Create IAM User</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='i_am_user.html'">
+                            <i class="fas fa-user-shield"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 21: Create S3 Bucket -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card task-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Create S3 Bucket</h5>
+                        <button class="btn btn-outline-light" onclick="window.location.href='s3_bucket.html'">
+                            <i class="fas fa-database"></i> Open
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+   <!-- Footer Section -->
+   <footer>
+    <p>&copy; 2024 Aman Kushwaha. All Rights Reserved.</p>
+    <p>
+        <section id="contact"></section>
+        Contact with me: 
+        <a href="https://www.linkedin.com/in/aman-kushwaha-4a3690237" target="_blank">LinkedIn</a> |
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=aman.ku0301@gmail.com" target="_blank">E-mail</a> |
+        <a href="https://github.com/amankushwaah" target="_blank">GitHub</a>
+    </p>
+</footer>
+
+
+
+</body>
+
+</html>

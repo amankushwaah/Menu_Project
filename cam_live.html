@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Camera</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #1b2c44);
+            color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-size: 200% 200%;
+            animation: backgroundShift 10s infinite alternate;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: rgba(60, 70, 80, 0.9);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            width: 80%;
+            max-width: 700px;
+            max-height: 450px;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        video {
+            width: 70%;
+            border: 2px solid #2a2d34;
+            border-radius: 10px;
+            background: #f2f2f2;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #96c5fc;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #3b4e8d, #6e9fd8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            animation: fadeIn 2s ease-in-out;
+            margin: 0;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #1e3d58, #4e5d6c);
+            color: #f2f2f2;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .home-button:hover {
+            background-color: #1c2835;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+    </style>
+</head>
+<body>
+    
+    <a href="index.html" class="home-button">Home</a>
+    
+    <div class="container">
+        <h1>Live Cam</h1>
+        <video id="video" autoplay></video>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const video = document.getElementById('video');
+
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => {
+                        video.srcObject = stream;
+                        video.play();
+                    })
+                    .catch(err => {
+                        console.error("Error accessing camera: ", err);
+                    });
+            } else {
+                alert("Sorry, your browser does not support camera access.");
+            }
+        });
+    </script>
+    
+</body>
+</html>

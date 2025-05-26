@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2a3c54, #4a6fa5);
+            color: #d3e0ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #708ca8;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1 {
+            color: #d3e0ff;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            text-align: center;
+            animation: slideIn 1.5s ease-out;
+        }
+
+        .input-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border: 2px solid #9ebae0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #d3e0ff;
+            background-color: #1c2833;
+            resize: none;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #4a6fa5;
+        }
+
+        button {
+            background-color: #9ebae0;
+            color: #1a2e40;
+            border: 2px solid #9ebae0;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #d3e0ff;
+            color: #1a2e40;
+            transform: scale(1.05);
+        }
+
+        #responseContainer {
+            width: 100%;
+            padding: 15px;
+            border-top: 2px solid #9ebae0;
+            text-align: left;
+            font-size: 16px;
+            color: #d3e0ff;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #0a1c2b;
+            margin-top: 20px;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        #homeButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #9ebae0;
+            color: #1a2e40;
+            border: 2px solid #9ebae0;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        #homeButton:hover {
+            background-color: #d3e0ff;
+            color: #1a2e40;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" id="homeButton">Home</a>
+    <div class="container">
+        <h1>AI Text Generator</h1>
+        <div class="input-group">
+            <textarea id="prompt" placeholder="Enter your prompt..."></textarea>
+            <button id="generateButton">Generate</button>
+        </div>
+        <div id="responseContainer"></div>
+    </div>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', function() {
+            var prompt = document.getElementById('prompt').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/cgi-bin/gemini_chat.py', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('responseContainer').innerText = xhr.responseText;
+                }
+            };
+
+            xhr.send('prompt=' + encodeURIComponent(prompt));
+        });
+    </script>
+</body>
+</html>

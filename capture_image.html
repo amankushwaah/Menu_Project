@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Capture</title>
+    <style>
+        /* Body and background styling */
+        body {
+            background: linear-gradient(135deg, #2c3e50, #1b2c44); /* Space blue gradient */
+            font-family: 'Arial', sans-serif;
+            color: #f2f2f2;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            background-size: 200% 200%;
+            animation: backgroundShift 10s infinite alternate;
+        }
+
+        h1 {
+            color: #96c5fc;
+            margin-bottom: 20px;
+            font-size: 3em;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #e0e4e9;
+            color: #334756;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: background-color 0.5s ease, transform 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .home-button:hover {
+            background-color: #3a506b;
+            transform: translateY(-5px);
+        }
+
+        .video-container {
+            position: relative;
+            width: 500px;
+            height: 450px;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        video, canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #1e3d58, #4e5d6c);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Gallery styling */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .gallery img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-button">Home</a>
+
+    <h1>Snap Your Moment!</h1>
+
+    <!-- Video and Canvas Container -->
+    <div class="video-container">
+        <video id="video" autoplay></video>
+    </div>
+
+    <!-- Button to Capture Photo -->
+    <div class="button-container">
+        <button id="capture">Capture Photo</button>
+    </div>
+
+    <!-- Gallery for Captured Images -->
+    <div class="gallery" id="gallery"></div>
+
+    <script>
+        const video = document.getElementById('video');
+        const captureButton = document.getElementById('capture');
+        const canvas = document.createElement('canvas');
+        const gallery = document.getElementById('gallery');
+        const context = canvas.getContext('2d');
+
+        // Access the user's camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(error => {
+                console.error('Error accessing camera:', error);
+            });
+
+        // Capture the photo and add to gallery
+        captureButton.addEventListener('click', () => {
+            // Set the canvas size equal to the video size
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            // Draw the video frame on the canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Create an image element for the captured photo
+            const img = document.createElement('img');
+            img.src = canvas.toDataURL('image/png');
+            gallery.appendChild(img);  // Add the image to the gallery
+        });
+    </script>
+
+</body>
+</html>

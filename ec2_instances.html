@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch EC2 Instance</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #2a3c54, #4a6fa5); /* Cosmic blue gradient */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #d3e0ff; /* Gray-washed white text */
+        }
+
+        .container {
+            background-color: rgba(34, 47, 62, 0.85); /* Dark cosmic background with slight transparency */
+            backdrop-filter: blur(12px); /* Strong frosted glass effect */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); /* Deeper shadow */
+            text-align: center;
+            max-width: 550px;
+            width: 100%;
+            box-sizing: border-box;
+            animation: fadeInUp 1.5s ease; /* Fade-in up animation */
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, #9ebae0, #c5e1ff); /* Cosmic gradient text */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .form-group:last-child {
+            margin-right: 0;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #d3e0ff; /* Light label text */
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 1em;
+            border: 2px solid #9ebae0; /* Cosmic blue border */
+            background-color: #25354d; /* Darker background for inputs */
+            color: #d3e0ff; /* Light input text */
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(158, 186, 224, 0.4); /* Light shadow */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #4a6fa5; /* Brighter blue border on focus */
+            box-shadow: 0 0 10px rgba(74, 111, 165, 0.7); /* Glowing effect */
+        }
+
+        input[type="submit"] {
+            background-color: #9ebae0; /* Cosmic light blue */
+            color: #1a2e40; /* Dark contrast text */
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Deep shadow */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #d3e0ff; /* Lighter on hover */
+            color: #1a2e40; /* Darker text */
+            transform: translateY(-3px); /* Lift effect */
+        }
+
+        #homeButton {
+            background-color: #1a2e40; /* Dark cosmic button */
+            color: #d3e0ff; /* Light button text */
+            padding: 12px 24px;
+            border: 2px solid #9ebae0; /* Light blue border */
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Deep shadow */
+            animation: pulse 1.5s infinite; /* Subtle pulse animation */
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(158, 186, 224, 0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 20px rgba(158, 186, 224, 0.7);
+            }
+        }
+
+        #homeButton:hover {
+            background-color: #9ebae0;
+            color: #1a2e40;
+            transform: scale(1.05); /* Slight enlarge effect */
+        }
+
+        /* Add media query for responsiveness */
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+            }
+
+            .form-group {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="homeButton" onclick="window.location.href='index.html'">Home</button>
+        <h1>Launch EC2 Instance</h1>
+        <form action="/cgi-bin/launch_instance.py" method="post">
+            <!-- First row: Region and Instance Type -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="region">Region:</label>
+                    <input type="text" id="region" name="region" required>
+                </div>
+                <div class="form-group">
+                    <label for="instance_type">Instance Type:</label>
+                    <input type="text" id="instance_type" name="instance_type" required>
+                </div>
+            </div>
+
+            <!-- Second row: AMI ID and Key Pair Name -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ami_id">AMI ID:</label>
+                    <input type="text" id="ami_id" name="ami_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="key_name">Key Pair Name:</label>
+                    <input type="text" id="key_name" name="key_name" required>
+                </div>
+            </div>
+
+            <!-- Third row: AWS Access Key and AWS Secret Key -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="access_key">AWS Access Key:</label>
+                    <input type="text" id="access_key" name="access_key" required>
+                </div>
+                <div class="form-group">
+                    <label for="secret_key">AWS Secret Key:</label>
+                    <input type="password" id="secret_key" name="secret_key" required>
+                </div>
+            </div>
+
+            <input type="submit" value="Launch Instance">
+        </form>
+    </div>
+</body>
+</html>

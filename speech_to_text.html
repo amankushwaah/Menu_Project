@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice to Text</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #1b2c44);
+            color: #f2f2f2;
+            text-align: center;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-size: 200% 200%;
+            animation: backgroundShift 10s infinite alternate;
+        }
+
+        h1 {
+            margin: 20px;
+            color: #96c5fc;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            font-size: 2.5em;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        #text {
+            background-color: rgba(60, 70, 80, 0.9);
+            color: #f2f2f2;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 600px;
+            min-height: 200px;
+            margin: 20px 0;
+            overflow-y: auto;
+            word-wrap: break-word;
+            transition: transform 0.3s ease;
+        }
+
+        #text:hover {
+            transform: scale(1.02);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        #startButton, #stopButton {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #1e3d58, #4e5d6c);
+            color: #f2f2f2;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #startButton:hover, #stopButton:hover {
+            background-color: #1c2835;
+            transform: translateY(-3px);
+        }
+
+        #homeButton {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #e0e4e9;
+            color: #334756;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.5s ease, transform 0.3s ease;
+        }
+
+        #homeButton:hover {
+            background-color: #3a506b;
+            color: #f2f2f2;
+            transform: translateY(-5px);
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            if (!SpeechRecognition) {
+                alert("Your browser does not support Speech Recognition. Please use a supported browser like Chrome.");
+                return;
+            }
+
+            var recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = "en-US";
+
+            recognition.onresult = function(event) {
+                var final_transcript = "";
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        final_transcript += event.results[i][0].transcript + " ";
+                    }
+                }
+                document.getElementById("text").innerHTML = final_transcript;
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Speech Recognition Error: ", event.error);
+                alert("An error occurred: " + event.error);
+            };
+
+            recognition.onstart = function() {
+                console.log("Speech recognition service has started");
+            };
+
+            recognition.onend = function() {
+                console.log("Speech recognition service disconnected");
+            };
+
+            document.getElementById('startButton').onclick = function() {
+                recognition.start();
+            };
+
+            document.getElementById('stopButton').onclick = function() {
+                recognition.stop();
+            };
+
+            document.getElementById('homeButton').onclick = function() {
+                window.location.href = 'index.html';
+            };
+        }
+    </script>
+</head>
+<body>
+    <button id="homeButton">Home</button>
+    <h1>Voice to Text</h1>
+    <div id="text">Start Speaking</div>
+    <div class="button-container">
+        <button id="startButton">Start Speaking</button>
+        <button id="stopButton">Stop Speaking</button>
+    </div>
+</body>
+</html>
